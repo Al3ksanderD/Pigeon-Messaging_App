@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,7 +28,20 @@ public class UserEntity implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private MessageEntity messages;
+    @OneToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            orphanRemoval = true
+
+    )
+    @JoinTable(
+            name = "user_messeges_services",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_messeges_id")
+    )
+    private List<MessageEntity> messages;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

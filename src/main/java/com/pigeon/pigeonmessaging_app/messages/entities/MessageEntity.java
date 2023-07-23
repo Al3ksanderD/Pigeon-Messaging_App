@@ -27,6 +27,7 @@ public class MessageEntity {
     private Long id;
     private String messageText;
     private LocalDateTime creationDate;
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity author;
 
 
